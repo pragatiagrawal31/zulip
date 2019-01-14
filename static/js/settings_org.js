@@ -59,6 +59,9 @@ var org_settings = {
         send_welcome_emails: {
             type: 'bool',
         },
+        message_content_allowed_in_email_notifications: {
+            type: 'bool',
+        },
     },
 };
 

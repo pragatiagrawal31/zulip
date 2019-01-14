@@ -165,6 +165,7 @@ class HomeTest(ZulipTestCase):
             "realm_presence_disabled",
             "realm_push_notifications_enabled",
             "realm_send_welcome_emails",
+            "realm_message_content_allowed_in_email_notifications",
             "realm_signup_notifications_stream_id",
             "realm_uri",
             "realm_user_groups",
