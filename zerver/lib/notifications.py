@@ -350,7 +350,8 @@ def do_send_missedmessage_events_reply_in_zulip(user_profile: UserProfile,
         raise AssertionError("Invalid messages!")
 
     # If message content is disabled, then flush all information we pass to email.
-    if not Realm.message_content_allowed_in_email_notifications or not user_profile.message_content_in_email_notifications:
+    if (not user_profile.realm.message_content_allowed_in_email_notifications or
+        not user_profile.message_content_in_email_notifications):
         context.update({
             'reply_to_zulip': False,
             'messages': [],

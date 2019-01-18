@@ -307,7 +307,7 @@ class TestMissedMessages(ZulipTestCase):
             self.example_email('hamlet'),
             'Extremely personal message!',
         )
-
+        print(dir(mail.outbox))
         if show_message_content:
             body = 'You and Othello, the Moor of Venice Extremely personal message!'
             email_subject = 'Othello, the Moor of Venice sent you a message'
@@ -508,6 +508,25 @@ class TestMissedMessages(ZulipTestCase):
         self._extra_context_in_personal_missed_stream_messages(False, show_message_content=False)
         mail.outbox = []
         self._extra_context_in_huddle_missed_stream_messages_two_others(False, show_message_content=False)
+
+    def test_realm_message_content_allowed_in_email_notifications(self) -> None:
+        user = self.example_user("hamlet")
+        # Enable message_content_allowed_in_email_notifications for hamlet and test again.
+        do_change_notification_settings(user, "message_content_in_email_notifications", True)
+
+        realm = get_realm("zulip")
+        realm.message_content_allowed_in_email_notifications = True
+        realm.save(update_fields=['message_content_allowed_in_email_notifications'])
+        # Empty the test outbox
+        mail.outbox = []
+        #self._extra_context_in_personal_missed_stream_messages(False, show_message_conte                           nt=True)
+
+        realm = get_realm("zulip")
+        realm.message_content_allowed_in_email_notifications = False
+        realm.save(update_fields=['message_content_allowed_in_email_notifications'])
+        # Empty the test outbox
+        mail.outbox = []
+        self._extra_context_in_personal_missed_stream_messages(False, show_message_content=False)
 
     @override_settings(SEND_MISSED_MESSAGE_EMAILS_AS_USER=True)
     def test_extra_context_in_missed_stream_messages_as_user(self) -> None:
