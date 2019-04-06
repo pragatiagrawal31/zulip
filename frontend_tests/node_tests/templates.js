@@ -441,10 +441,8 @@ run_test('bankruptcy_modal', () => {
 
 run_test('admin_auth_methods_list', () => {
     var args = {
-        method: {
-            method: "Email",
-            enabled: false,
-        },
+        method: "Email",
+        enabled: false,
     };
 
     var html = '';
